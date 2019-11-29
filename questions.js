@@ -11,7 +11,7 @@
 //final page showing user and hi-score, clear high scores button, and go back to start button
 
 
-
+// create array of objects for code quiz questions
 var listOfQuizQuestions = [
   {
     title: "Commonly used data types DO NOT include:",
@@ -40,6 +40,8 @@ var listOfQuizQuestions = [
   }
 ];
 
+// create variables
+var quizContainerElem = get("quizcontainer");
 var currentQuestionIndex = 0;
 var currentQuestion = listOfQuizQuestions[currentQuestionIndex];
 var nextQuestionIndex = currentQuestionIndex + 1;
@@ -49,8 +51,9 @@ var totalSeconds = 75;
 var timeRemaining = totalSeconds;
 
 
-var quizheader, quizquestions, choicesarea, question, choice, choices, chA, chB, chC, chD;
+var startheader, startcontent, question, choice, choices, chA, chB, chC, chD;
 
+//create functions
 
 function get(x) {
   return document.getElementById(x);
@@ -76,22 +79,35 @@ for(p in listOfQuizQuestions) {
   console.log (p, listOfQuizQuestions[p])
 }
 
-function renderQuestions() {
-  var questionElem = get("quizquestions");
-  var choiceListElem = get("choicesarea");
-  var createList = document.createElement("li");
+function renderQuestions(i) {
+  var questionElem = document.createElement("div");
+  questionElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
 
-  var titleValue = listOfQuizQuestions["title"];
-  var choicesValue = listOfQuizQuestions["choices"];
-  var answerValue = listOfQuizQuestions["answer"];
+  var choiceListElem = document.createElement("li");
+  choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
 
-  var titleValueString = JSON.stringify(titleValue);
-  var choicesValueString = JSON.stringify(choicesValue);
-  var answerValueString = JSON.stringify(answerValue);
+  var titleValue = listOfQuizQuestions[i].title;
+  var choicesValue = listOfQuizQuestions[i].choices;
+  var answerValue = listOfQuizQuestions[i].answer;
 
-  get("quizquestions").textContent = titleValueString;
-  createList.appendChild(document.createTextNode(choicesValueString));
-  choiceListElem.appendChild(createList);
+  console.log(titleValue);
+  console.log(choicesValue);
+
+  // var titleValue = listOfQuizQuestions["title"];
+  // var choicesValue = listOfQuizQuestions["choices"];
+  // var answerValue = listOfQuizQuestions["answer"];
+
+  // var titleValueString = JSON.stringify(titleValue);
+  // var choicesValueString = JSON.stringify(choicesValue);
+  // var answerValueString = JSON.stringify(answerValue);
+
+  // questionElem.innerHTML(titleValue);
+  // choiceListElem.innerHTML(choicesValue);
+
+
+  // get("quizquestions").textContent = titleValueString;
+  // createList.appendChild(document.createTextNode(choicesValueString));
+  // choiceListElem.appendChild(createList);
   
  
 }
@@ -103,7 +119,7 @@ get("startbutton").addEventListener("click", function () {
   //loop questions
   for (var i = 0; i < listOfQuizQuestions.length - 1; i++) {
     //get("test").appendChild(element);
-    renderQuestions();
+    renderQuestions(i);
   }
 
   // display() so that can be used for every level
