@@ -14,12 +14,11 @@
     <link rel="stylesheet" type="text/css" href="./Assets/CSS/codequizstyle.css">
 
     <!--Favicon-->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="./Assets/Images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="./Assets/Images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./Assets/Images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./Assets/Images/favicon-16x16.png">
+    <link rel="manifest" href="./Assets/Images/site.webmanifest">
 
     <title>Rp's Code Quiz</title>
 </head>
@@ -28,7 +27,8 @@
 
     <!--Nav Bar-->
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand" href="#"><img= id="logo" alt=mylogo src="./Assets/Images/android-chrome-192x192.png" height=50; width=50 align="left">
+        <a class="navbar-brand" href="#"><img alt="mylogo" src="./Assets/Images/android-chrome-192x192.png" height=50;
+                width=50 align="left">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,10 +37,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="./index.html">Hi-Score<span class="sr-only">(current)</span></a>
+                    <a class="nav-link">Hi-Score<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./portfolio.html">Timer Countdown:
+                    <a class="nav-link">Timer Countdown:
                     </a>
                 </li>
             </ul>
@@ -48,24 +48,29 @@
     </nav>
 
 
-    <div class="container">
+    <div class="container" id="quizcontainer">
+        <div class="form-group">
+            &nbsp;
+        </div>
         <div class="row justify-content-center">
-            <div class="col-sm-8 offset-sm-2 col-md-8 offset-md-2" id="codequizheader">
-                <p class="h1">Coding Quiz Challenge!</p>
+            <div class="col-sm-8 offset-sm-2 col-md-8 offset-md-2" id="quizheader">
+                <p class="h2">Coding Quiz Challenge</p>
             </div>
         </div>
         <div class="row justify-content-between">
-            <div class="col-sm-8 offset-sm-2 col-md-8 offset-md-2" id="codequizcontent">
-                <p class="d-flex justify-content-center">Your challenge is to answer questions related to Javascript
+            <div class="col-sm-8 offset-sm-2 col-md-8 offset-md-2" id="quizquestions">
+                <p class="d-flex justify-content-center" id="startnote1">Your challenge is to answer questions related to Javascript
                     coding within the time limit. Do note that there will be a penalty of 15 seconds deducted from the
                     timer for every wrong answer.</p>
-                <p class="d-flex justify-content-between">
-                    Find out how knowledgable you are at Javascript coding now! Click on the 'Start Quiz' button to begin.
+                <p class="d-flex justify-content-between" id="startnote2">
+                    Find out how knowledgable you are at Javascript coding now! Click on the 'Start Quiz' button to
+                    begin.
                 </p>
+                <ul id="choicesarea"></ul>
             </div>
         </div>
         <div class="row justify-content-center>
-        <form class="form-group">
+        <form class=" form-group">
             <div class="col-sm-4 offset-sm-4 col-md-4 offset-md-4" id="startbutton">
                 <button class="btn btn-rita my-2 my-sm-0" type="submit">Start Quiz</button>
             </div>
@@ -97,11 +102,6 @@
             <p class="text-muted">Copyright &#169;</p>
         </div>
     </div>
-
-
-
-
-
 
     <script src="./questions.js"></script>
 

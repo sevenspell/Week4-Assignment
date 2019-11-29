@@ -1,4 +1,13 @@
 .btn-rita {
-    background-color: #B44;
-    color: #ffffff;
-}
+    background-color: rgba(0, 60, 128, 0.842);
+    color: hsla(86, 96%, 81%, 0.973);
+    font-weight: bold;
+};
+
+#quizcontent {
+    border-color:rgba(0, 60, 128, 0.842);
+    border: 2px solid; 
+    padding:10px 40px 40px 40px; 
+    background-color: rgba(0, 128, 128, 0.041); 
+    width:50%;
+};
