@@ -54,6 +54,24 @@ var totalSeconds = listOfQuizQuestions.length * 15;
 
 
 //2. Once start button is clicked..
+
+get("startbutton").addEventListener("click", function () {
+  //hide start button
+  hideStart();
+  //display question and 4 choices of answers
+    //create HTML tags
+  createHTML();
+    //post questions
+  renderQuestions();
+  //timer starts running
+  updateTimer();
+
+  //for (var i = 0; i < listOfQuizQuestions.length; i++) {}
+
+
+});
+
+
   //instructions and start button is hidden
   function hideStart() {  
     var startHeaderHide = get("startheader");
@@ -64,37 +82,9 @@ var totalSeconds = listOfQuizQuestions.length * 15;
     startButtonHide.style.display = "none";
   };
 
+//display question and 4 choices of answers
 
-
-
-  //timer starts counting down
-
-  function updateTimer(){
-    // start timer countdown if there is still time left
-    if (totalSeconds > 0) {
-      var totalSecondsTicker = setInterval(function() {
-        totalSeconds--;
-        //if no more time left, stop countdown and set timer to 0
-        if (totalSeconds <= 0) {
-          clearInterval(totalSecondsTicker);
-          totalSeconds = 0;
-        };
-      }, 1000);
-      };
-
-    //Parse remaining time
-    var remainingTime = parseInt(totalSeconds);
-
-    //Update HTML
-    timerRemainingElem.innerHTML = "Time Left: " + remainingTime;
-
-    };
-
-    
-
-  //display question and 4 choices of answers
-
-    //create function for creating html tags for questions
+  //create function for creating html tags for questions
   function createHTML(){
     var questionDivElem = document.createElement("div");
     questionDivElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
@@ -135,7 +125,7 @@ var totalSeconds = listOfQuizQuestions.length * 15;
 
     
 
-    // parse question and choices to html tags
+  // parse question and choices to html tags
   function renderQuestions() {
 
     var titleValue = listOfQuizQuestions[0].title;
@@ -152,13 +142,35 @@ var totalSeconds = listOfQuizQuestions.length * 15;
     get("choicelist3").textContent = choicesValue[2];
     get("choicelist4").textContent = choicesValue[3];
 
-    //choiceListElem.textContent = choicesValue;
-  
-    // createList.appendChild(document.createTextNode(choicesValue));
-    // choiceListElem.appendChild(createList);
     
-   
   };
+
+
+  //timer starts counting down
+  function updateTimer(){
+    // start timer countdown if there is still time left
+    if (totalSeconds > 0) {
+      var totalSecondsTicker = setInterval(function() {
+        totalSeconds--;
+        //if no more time left, stop countdown and set timer to 0
+        if (totalSeconds <= 0) {
+          clearInterval(totalSecondsTicker);
+          totalSeconds = 0;
+        };
+      }, 1000);
+      };
+
+    //Parse remaining time
+    var remainingTime = parseInt(totalSeconds);
+
+    //Update HTML
+    timerRemainingElem.innerHTML = "Time Left: " + remainingTime;
+
+    };
+
+    
+
+  
 
 //3. When choice of answer is clicked..
   //determine if answer matches correct answer
@@ -187,8 +199,6 @@ function get(x) {
   return document.getElementById(x);
 };
 
-
-
 function addToHiScore() {
   hiScore += 15;
 };
@@ -202,15 +212,4 @@ function finalScoreCalc() {
 };
 
 
-get("startbutton").addEventListener("click", function () {
-  //timer starts running
-  updateTimer();
-  //hide start button
-  hideStart();
-  //create HTML tags
-  createHTML();
-  //post questions
-  renderQuestions();
-  //for (var i = 0; i < listOfQuizQuestions.length; i++) {}
-});
 
