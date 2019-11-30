@@ -22,6 +22,21 @@
     margin: 10px 1150px 10px 10px;
 }
 
+.choiceButtons{
+    background-color: rgba(0, 60, 128, 0.842);
+    border: rgba(0, 60, 128, 0.842) solid 1px;
+    color: hsla(86, 96%, 81%, 0.973);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 10px auto 10px auto;
+    padding: 10px;
+    border-radius: 15px;
+    width: 200px;
+    position: relative;
+    left: -250px;
+
+
+}
+
 
 .footer {
     position: fixed;

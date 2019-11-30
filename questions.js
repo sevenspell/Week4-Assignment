@@ -37,10 +37,7 @@ var currentQuestion = listOfQuizQuestions[currentQuestionIndex];
 var nextQuestionIndex = currentQuestionIndex + 1;
 var nextQuestion = listOfQuizQuestions[nextQuestionIndex];
 var hiScore = 0;
-var totalSeconds = questions.length * 15;
-
-
-var startheader, startcontent, question, choice, choices, chA, chB, chC, chD;
+var totalSeconds = listOfQuizQuestions.length * 15;
 
 //1. instructions and start button for user to press start
   //hi-score on the top left shows original score = 0
@@ -54,11 +51,114 @@ var startheader, startcontent, question, choice, choices, chA, chB, chC, chD;
   console.log(timerRemainingElem);
 
 
+
+
 //2. Once start button is clicked..
   //instructions and start button is hidden
+  function hideStart() {  
+    var startHeaderHide = get("startheader");
+    startHeaderHide.style.display = "none";
+    var startContentHide = get("startcontent");
+    startContentHide.style.display = "none";
+    var startButtonHide = get("startbutton");
+    startButtonHide.style.display = "none";
+  };
+
+
+
 
   //timer starts counting down
+
+  function updateTimer(){
+    // start timer countdown if there is still time left
+    if (totalSeconds > 0) {
+      var totalSecondsTicker = setInterval(function() {
+        totalSeconds--;
+        //if no more time left, stop countdown and set timer to 0
+        if (totalSeconds <= 0) {
+          clearInterval(totalSecondsTicker);
+          totalSeconds = 0;
+        };
+      }, 1000);
+      };
+
+    //Parse remaining time
+    var remainingTime = parseInt(totalSeconds);
+
+    //Update HTML
+    timerRemainingElem.innerHTML = "Time Left: " + remainingTime;
+
+    };
+
+    
+
   //display question and 4 choices of answers
+
+    //create function for creating html tags for questions
+  function createHTML(){
+    var questionDivElem = document.createElement("div");
+    questionDivElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
+    questionDivElem.setAttribute("id", "questionDiv");
+    questionDivElem.style.display = "block";
+    get("quizcontainer").appendChild(questionDivElem);
+
+    var questionH4Elem = document.createElement("h4");
+    questionH4Elem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
+    questionH4Elem.setAttribute("id", "questiontitle");
+    questionH4Elem.style.display = "block";
+    get("quizcontainer").appendChild(questionH4Elem);
+    
+    var choiceListElem = document.createElement("li");
+    choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
+    choiceListElem.setAttribute("id", "choicelist1");
+    choiceListElem.style.display = "block";
+    get("quizcontainer").appendChild(choiceListElem);
+
+    var choiceListElem = document.createElement("li");
+    choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
+    choiceListElem.setAttribute("id", "choicelist2");
+    choiceListElem.style.display = "block";
+    get("quizcontainer").appendChild(choiceListElem);
+
+    var choiceListElem = document.createElement("li");
+    choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
+    choiceListElem.setAttribute("id", "choicelist3");
+    choiceListElem.style.display = "block";
+    get("quizcontainer").appendChild(choiceListElem);
+
+    var choiceListElem = document.createElement("li");
+    choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
+    choiceListElem.setAttribute("id", "choicelist4");
+    choiceListElem.style.display = "block";
+    get("quizcontainer").appendChild(choiceListElem);
+    };
+
+    
+
+    // parse question and choices to html tags
+  function renderQuestions() {
+
+    var titleValue = listOfQuizQuestions[0].title;
+    var choicesValue = listOfQuizQuestions[0].choices;
+    var answerValue = listOfQuizQuestions[0].answer;  
+  
+    console.log(titleValue);
+    console.log(choicesValue);
+    console.log(answerValue);
+  
+    get("questiontitle").textContent = titleValue;
+    get("choicelist1").textContent = choicesValue[0];
+    get("choicelist2").textContent = choicesValue[1];
+    get("choicelist3").textContent = choicesValue[2];
+    get("choicelist4").textContent = choicesValue[3];
+
+    //choiceListElem.textContent = choicesValue;
+  
+    // createList.appendChild(document.createTextNode(choicesValue));
+    // choiceListElem.appendChild(createList);
+    
+   
+  };
 
 //3. When choice of answer is clicked..
   //determine if answer matches correct answer
@@ -85,59 +185,32 @@ var startheader, startcontent, question, choice, choices, chA, chB, chC, chD;
 
 function get(x) {
   return document.getElementById(x);
-}
+};
 
-function timerCountdown() {
-  totalSeconds--;
-}
+
 
 function addToHiScore() {
   hiScore += 15;
-}
+};
 
 function minusFromTimer() {
   totalSeconds -= 15;
-}
+};
 
 function finalScoreCalc() {
   hiScore + totalSeconds;
-}
-
-function startQuiz()
-
-function renderQuestions(i) {
-
-  var questionElem = document.createElement("div");
-  questionElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
-
-  var choiceListElem = document.createElement("li");
-  choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
-
-  var titleValue = listOfQuizQuestions[0].title;
-  var choicesValue = listOfQuizQuestions[0].choices;
-  var answerValue = listOfQuizQuestions[0].answer;  
-
-  console.log(titleValue);
-  console.log(choicesValue);
-
-  questionElem.innerHTML(titleValue);
-  choiceListElem.innerHTML(choicesValue);
-
-  // get("quizquestions").textContent = titleValueString;
-  // createList.appendChild(document.createTextNode(choicesValueString));
-  // choiceListElem.appendChild(createList);
-  
- 
-}
+};
 
 
 get("startbutton").addEventListener("click", function () {
   //timer starts running
+  updateTimer();
   //hide start button
-  //loop questions
-  for (var i = 0; i < listOfQuizQuestions.length - 1; i++) {
-    //get("test").appendChild(element);
-    renderQuestions(i);
-  }
+  hideStart();
+  //create HTML tags
+  createHTML();
+  //post questions
+  renderQuestions();
+  //for (var i = 0; i < listOfQuizQuestions.length; i++) {}
 });
 
