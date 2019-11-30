@@ -11,3 +11,29 @@
     background-color: rgba(0, 128, 128, 0.041); 
     width:50%;
 };
+
+#timerCountdownSection{
+    position: relative;
+    margin: 10px 10px 10px 500px;
+}
+
+#hiScoreSection{
+    position: relative;
+    margin: 10px 1150px 10px 10px;
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 25px;
+    background-color:#212529;
+    color: #DDDEDE;
+    text-align: center;
+    font-size: 12px;
+    padding: 20px;
+    margin-bottom: 0;
+    border-top: 5px solid;
+    border-top-color: hsla(86, 96%, 81%, 0.973);
+}

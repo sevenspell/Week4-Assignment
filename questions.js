@@ -1,15 +1,5 @@
 //Pseudocoding
 
-//1. button for user to press start
-//hi-score on the top left
-//timer on the top right starts running
-//2. Five questions
-//user clicks answer and get immediate feedback on whether it's correct or wrong
-//if answer is wrong, 15 seconds deducted from timer
-//3. page showing hi-score and text input for player initials
-// score calculation is 15 points for each correct answer plus remaining time left
-//final page showing user and hi-score, clear high scores button, and go back to start button
-
 
 // create array of objects for code quiz questions
 var listOfQuizQuestions = [
@@ -40,18 +30,56 @@ var listOfQuizQuestions = [
   }
 ];
 
-// create variables
+// create global variables
 var quizContainerElem = get("quizcontainer");
 var currentQuestionIndex = 0;
 var currentQuestion = listOfQuizQuestions[currentQuestionIndex];
 var nextQuestionIndex = currentQuestionIndex + 1;
 var nextQuestion = listOfQuizQuestions[nextQuestionIndex];
 var hiScore = 0;
-var totalSeconds = 75;
-var timeRemaining = totalSeconds;
+var totalSeconds = questions.length * 15;
 
 
 var startheader, startcontent, question, choice, choices, chA, chB, chC, chD;
+
+//1. instructions and start button for user to press start
+  //hi-score on the top left shows original score = 0
+  var highScoreElem = get("hiScoreSection");
+  highScoreElem.textContent = "HighScore: " + hiScore;
+  //timer on the top right shows original time = 75
+  var timerRemainingElem = get("timerCountdownSection");
+  timerRemainingElem.textContent = "Time Left: " + totalSeconds;
+
+  console.log(highScoreElem);
+  console.log(timerRemainingElem);
+
+
+//2. Once start button is clicked..
+  //instructions and start button is hidden
+
+  //timer starts counting down
+  //display question and 4 choices of answers
+
+//3. When choice of answer is clicked..
+  //determine if answer matches correct answer
+    // if answer is correct, show text to indicate "correct"
+      //hide current question/choices
+      //show next question/choices
+    // if answer is wrong, show text to indicate "wrong" 
+      //deduct 15 seconds from timer
+      //hide current question/choices
+      //show next question/choices
+
+//4. When it comes to end of quiz ie. last question on list
+  //go to results page 
+    //show remaining seconds on timer as final score
+    // allow text input of initials and submit
+//5. Go to hi-score page with initials
+  //show latest hi-score ranking (sorted by highest scores)
+  //show Clear button to clear localStorage
+  //show Go Back to Start button to go back to initial page
+
+
 
 //create functions
 
@@ -60,7 +88,7 @@ function get(x) {
 }
 
 function timerCountdown() {
-  timerInitial--;
+  totalSeconds--;
 }
 
 function addToHiScore() {
@@ -68,42 +96,32 @@ function addToHiScore() {
 }
 
 function minusFromTimer() {
-  timeRemaining -= 15;
+  totalSeconds -= 15;
 }
 
 function finalScoreCalc() {
-  hiScore + timeRemaining;
+  hiScore + totalSeconds;
 }
 
-for(p in listOfQuizQuestions) {
-  console.log (p, listOfQuizQuestions[p])
-}
+function startQuiz()
 
 function renderQuestions(i) {
+
   var questionElem = document.createElement("div");
   questionElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
 
   var choiceListElem = document.createElement("li");
   choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
 
-  var titleValue = listOfQuizQuestions[i].title;
-  var choicesValue = listOfQuizQuestions[i].choices;
-  var answerValue = listOfQuizQuestions[i].answer;
+  var titleValue = listOfQuizQuestions[0].title;
+  var choicesValue = listOfQuizQuestions[0].choices;
+  var answerValue = listOfQuizQuestions[0].answer;  
 
   console.log(titleValue);
   console.log(choicesValue);
 
-  // var titleValue = listOfQuizQuestions["title"];
-  // var choicesValue = listOfQuizQuestions["choices"];
-  // var answerValue = listOfQuizQuestions["answer"];
-
-  // var titleValueString = JSON.stringify(titleValue);
-  // var choicesValueString = JSON.stringify(choicesValue);
-  // var answerValueString = JSON.stringify(answerValue);
-
-  // questionElem.innerHTML(titleValue);
-  // choiceListElem.innerHTML(choicesValue);
-
+  questionElem.innerHTML(titleValue);
+  choiceListElem.innerHTML(choicesValue);
 
   // get("quizquestions").textContent = titleValueString;
   // createList.appendChild(document.createTextNode(choicesValueString));
@@ -121,20 +139,5 @@ get("startbutton").addEventListener("click", function () {
     //get("test").appendChild(element);
     renderQuestions(i);
   }
-
-  // display() so that can be used for every level
-  //addeventlistener for every choice button
-  //get button (index or string) for value
-  //if/else to compare choice vs correct answer
-  // Show text to confirm correct or wrong
-  // score ++
-  // remove current qn
-  // display next qn
-  // else (wrong)
-  //timer --
-  //show text to confirm wrong
-  // remove current qn
-  // display next qn
-
 });
 

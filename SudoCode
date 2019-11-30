@@ -84,18 +84,6 @@ function saveCurrentScore() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  *  On HighScore Page
  */
@@ -127,3 +115,26 @@ renderList()
         // create <li>
         // li.text = highScore
         // listEl.appendChild(li)
+
+
+
+
+
+
+Pseudocode from Sandesh
+
+function startQuiz() {
+  // hide start screen
+  // un-hide questions section
+  // start timer
+  // show starting time
+  getQuestion();
+}
+function getQuestion() {
+  // get current question object from array
+  // update title with current question
+  // clear out any old question choices
+  // loop over choices
+    // attach click event listener to each choice
+    // display on the page
+  });
