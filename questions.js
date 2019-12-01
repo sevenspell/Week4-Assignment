@@ -43,12 +43,9 @@ var totalSeconds = (listOfQuizQuestions.length * 15) + 15;
   //hi-score on the top left shows original score = 0
   var highScoreElem = get("hiScoreSection");
   highScoreElem.textContent = "HighScore: " + hiScore;
-  //timer on the top right shows original time = 75
+  //timer on the top right shows original time = 90
   var timerRemainingElem = get("timerCountdownSection");
   timerRemainingElem.textContent = "Time Left: " + totalSeconds;
-
-  console.log(highScoreElem);
-  console.log(timerRemainingElem);
 
 
 
@@ -63,8 +60,18 @@ get("startbutton").addEventListener("click", function () {
   createHTML();
     //post questions
   renderQuestions();
-  //timer starts running
-  updateTimer();
+  //timer starts countdown
+  var timer;
+  timer = setInterval(updateTimer, 1000);
+  function updateTimer(){
+    totalSeconds--;
+    timerRemainingElem.textContent = "Time Left: " + totalSeconds;
+    
+  // stop timer at zero
+    if (totalSeconds <= 0) {
+      clearInterval(timer);
+    };
+  };
 
   //for (var i = 0; i < listOfQuizQuestions.length; i++) {}
 
@@ -85,7 +92,6 @@ get("startbutton").addEventListener("click", function () {
 //display question and 4 choices of answers
 
   //create function for creating html tags for questions
-
   function createHTML(){
     var questionDivElem = document.createElement("div");
     questionDivElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
@@ -131,7 +137,6 @@ get("startbutton").addEventListener("click", function () {
     
 
   // parse question and choices to html tags
-
   function renderQuestions() {
 
     var titleValue = listOfQuizQuestions[0].title;
@@ -152,30 +157,8 @@ get("startbutton").addEventListener("click", function () {
   };
 
 
-  //timer starts counting down
-  updateTimer();
-  function updateTimer(){
-    // start timer countdown if there is still time left
-    if (totalSeconds > 0) {
-      var totalSecondsTicker = setInterval(function() {
-        totalSeconds--;
-        //if no more time left, stop countdown and set timer to 0
-        if (totalSeconds <= 0) {
-          clearInterval(totalSecondsTicker);
-          totalSeconds = 0;
-        };
-      }, 1000);
-      };
 
-    //Parse remaining time
-    var remainingTime = parseInt(totalSeconds);
-
-    //Update HTML
-    timerRemainingElem.innerHTML = "Time Left: " + remainingTime;
-
-    };
-
-    
+  
 
   
 
@@ -190,20 +173,20 @@ get("startbutton").addEventListener("click", function () {
 
 
     // }
+  console.log(choiceButtons);
 
-
-    get("choicelist2").addEventListener("click", function () {
+    // document.querySelector(".choiceButtons").addEventListener("click", function () {
       
-      // function returnUserChoiceValue(event){
-      //   //var returnChoice = event.target;
-      //   var returnChoiceIDValue = returnChoice.getAttribute("id");
-      //   console.log(returnChoiceIDValue);
-      //   console.log("user chose: " + returnChoice.getAttribute("id"));
-      // };
+    //   // function returnUserChoiceValue(event){
+    //   //   //var returnChoice = event.target;
+    //   //   var returnChoiceIDValue = returnChoice.getAttribute("id");
+    //   //   console.log(returnChoiceIDValue);
+    //   //   console.log("user chose: " + returnChoice.getAttribute("id"));
+    //   // };
 
-      console.log("choicelist2 is working");
+    //   console.log("choiceButtons is working");
 
-    });
+    // });
 
   //determine if answer matches correct answer
     // if answer is correct, show text to indicate "correct"
