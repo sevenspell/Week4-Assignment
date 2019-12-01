@@ -105,28 +105,28 @@ get("startbutton").addEventListener("click", function () {
     questionH4Elem.style.display = "block";
     get("quizcontainer").appendChild(questionH4Elem);
     
-    var choiceListElem = document.createElement("li");
+    var choiceListElem = document.createElement("button");
     choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
     choiceListElem.setAttribute("id", "choicelist1");
     choiceListElem.setAttribute("type", "submit");
     choiceListElem.style.display = "block";
     get("quizcontainer").appendChild(choiceListElem);
 
-    var choiceListElem = document.createElement("li");
+    var choiceListElem = document.createElement("button");
     choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
     choiceListElem.setAttribute("id", "choicelist2");
     choiceListElem.setAttribute("type", "submit");
     choiceListElem.style.display = "block";
     get("quizcontainer").appendChild(choiceListElem);
 
-    var choiceListElem = document.createElement("li");
+    var choiceListElem = document.createElement("button");
     choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
     choiceListElem.setAttribute("id", "choicelist3");
     choiceListElem.setAttribute("type", "submit");
     choiceListElem.style.display = "block";
     get("quizcontainer").appendChild(choiceListElem);
 
-    var choiceListElem = document.createElement("li");
+    var choiceListElem = document.createElement("button");
     choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
     choiceListElem.setAttribute("id", "choicelist4");
     choiceListElem.setAttribute("type", "submit");
@@ -173,20 +173,19 @@ get("startbutton").addEventListener("click", function () {
 
 
     // }
-  console.log(choiceButtons);
 
-    // document.querySelector(".choiceButtons").addEventListener("click", function () {
+    choiceListElem.addEventListener("click", function () {
       
-    //   // function returnUserChoiceValue(event){
-    //   //   //var returnChoice = event.target;
-    //   //   var returnChoiceIDValue = returnChoice.getAttribute("id");
-    //   //   console.log(returnChoiceIDValue);
-    //   //   console.log("user chose: " + returnChoice.getAttribute("id"));
-    //   // };
+      // function returnUserChoiceValue(event){
+      //   //var returnChoice = event.target;
+      //   var returnChoiceIDValue = returnChoice.getAttribute("id");
+      //   console.log(returnChoiceIDValue);
+      //   console.log("user chose: " + returnChoice.getAttribute("id"));
+      // };
 
-    //   console.log("choiceButtons is working");
+      console.log("choiceButtons is working");
 
-    // });
+    });
 
   //determine if answer matches correct answer
     // if answer is correct, show text to indicate "correct"
