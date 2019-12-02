@@ -32,18 +32,27 @@ var listOfQuizQuestions = [
 
 // create global variables
 var quizContainerElem = get("quizcontainer");
-var questionDivElem = "";
 var questionH4Elem = "";
 var choiceListElem = "";
+var lineBreak = "";
+var returnChoiceListElemValue = "";
+var returnChoiceListElemValue1 = "";
+var returnChoiceListElemValue2 = "";
+var returnChoiceListElemValue3 = "";
+var returnChoiceListElemValue4 = "";
 
-
-
+var titleValue = listOfQuizQuestions[0].title;
+var choicesValue = listOfQuizQuestions[0].choices;
+var answerValue = listOfQuizQuestions[0].answer;  
 var currentQuestionIndex = 0;
 var currentQuestion = listOfQuizQuestions[currentQuestionIndex];
 var nextQuestionIndex = currentQuestionIndex + 1;
 var nextQuestion = listOfQuizQuestions[nextQuestionIndex];
 var hiScore = 0;
 var totalSeconds = (listOfQuizQuestions.length * 15) + 15;
+
+
+
 
 //1. instructions and start button for user to press start
   //hi-score on the top left shows original score = 0
@@ -52,8 +61,6 @@ var totalSeconds = (listOfQuizQuestions.length * 15) + 15;
   //timer on the top right shows original time = 90
   var timerRemainingElem = get("timerCountdownSection");
   timerRemainingElem.textContent = "Time Left: " + totalSeconds;
-
-
 
 
 //2. Once start button is clicked..
@@ -79,8 +86,6 @@ get("startbutton").addEventListener("click", function () {
     };
   };
 
-  //for (var i = 0; i < listOfQuizQuestions.length; i++) {}
-
 });
 
 
@@ -99,28 +104,25 @@ get("startbutton").addEventListener("click", function () {
 
   //create function for creating html tags for questions
   function createHTML(){
-    questionDivElem = document.createElement("div");
-    questionDivElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2");
-    questionDivElem.setAttribute("id", "questionDiv");
-    questionDivElem.style.display = "block";
-    get("quizcontainer").appendChild(questionDivElem);
 
-    questionH4Elem = document.createElement("h4");
-    questionH4Elem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2");
-    questionH4Elem.setAttribute("id", "questiontitle");
-    questionH4Elem.style.display = "block";
-    get("quizcontainer").appendChild(questionH4Elem);
+    questionH4Elem = get("questiontitle");
+    questionH4Elem.setAttribute("class", "show");
     
     var currentChoiceListEl = listOfQuizQuestions[0].choices;
     for (var i = 0; i < currentChoiceListEl.length; i++){
 
-    choiceListElem = document.createElement("button");
-    choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 choiceButtons");
-    choiceListElem.setAttribute("id", [i+1]+"choicelist");
-    choiceListElem.setAttribute("value", [i+1]);
-    choiceListElem.setAttribute("type", "submit");
-    choiceListElem.style.display = "block";
-    get("quizcontainer").appendChild(choiceListElem);
+      choiceListElem = document.createElement("button");
+      choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
+      choiceListElem.setAttribute("id", [i+1]+"choicelist");
+      choiceListElem.setAttribute("value", [i+1]);
+      choiceListElem.setAttribute("type", "submit");
+      choiceListElem.onclick = returnChoiceValue;
+
+      var choiceButtonInsert = get("choicelist").appendChild(choiceListElem);
+
+      lineBreak = document.createElement("br");
+
+      var lineBreakInsert = get("choicelist").appendChild(lineBreak);
 
     };
   };
@@ -145,23 +147,13 @@ get("startbutton").addEventListener("click", function () {
 
   };
 
-  
 
 //3. When choice of answer is clicked..
-
-    // addEventListener for choice button to return value
-
-  var choiceButtonSelector = document.getElementsByClassName("choiceButtons");
-  console.log(choiceButtonSelector);
-
-  // choiceButtonSelector.addEventListener("click", function(){
-  
-  //   console.log("choiceButtons is working");
-
-  // });
-
-    // function returnChoiceValue(){
-    // }
+    // add onclick event function for choice button to return value
+    function returnChoiceValue(){
+      console.log(this.value);
+      return this.value;
+    };
 
 
 
@@ -189,6 +181,10 @@ get("startbutton").addEventListener("click", function () {
 
 function get(x) {
   return document.getElementById(x);
+};
+
+function getClass(x) {
+  return document.getElementsByClassName(x);
 };
 
 function addToHiScore() {
