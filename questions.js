@@ -6,32 +6,38 @@ var listOfQuizQuestions = [
   {
     title: "Commonly used data types DO NOT include:",
     choices: ["strings", "booleans", "alerts", "numbers"],
-    answer: "choicelist3"
+    answer: "3choicelist"
   },
   {
     title: "The condition in an if / else statement is enclosed within ____.",
     choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
-    answer: "choicelist3"
+    answer: "3choicelist"
   },
   {
     title: "What is the correct code for 'A does not equal to B'?",
     choices: ["A =/= B", "A !== B", "A === B", "A += B"],
-    answer: "choicelist2"
+    answer: "2choicelist"
   },
   {
     title: "The purpose of functions is to:",
     choices: ["perform actions in the content", "style the content", "create content", "log results"],
-    answer: "choicelist1"
+    answer: "1choicelist"
   },
   {
     title: "What function do you use to create random results?",
     choices: ["Math.floor(x)", "Math.round(x)", "Math.ceil(x)", "Math.random()"],
-    answer: "choicelist4"
+    answer: "4choicelist"
   }
 ];
 
 // create global variables
 var quizContainerElem = get("quizcontainer");
+var questionDivElem = "";
+var questionH4Elem = "";
+var choiceListElem = "";
+
+
+
 var currentQuestionIndex = 0;
 var currentQuestion = listOfQuizQuestions[currentQuestionIndex];
 var nextQuestionIndex = currentQuestionIndex + 1;
@@ -93,47 +99,31 @@ get("startbutton").addEventListener("click", function () {
 
   //create function for creating html tags for questions
   function createHTML(){
-    var questionDivElem = document.createElement("div");
-    questionDivElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
+    questionDivElem = document.createElement("div");
+    questionDivElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2");
     questionDivElem.setAttribute("id", "questionDiv");
     questionDivElem.style.display = "block";
     get("quizcontainer").appendChild(questionDivElem);
 
-    var questionH4Elem = document.createElement("h4");
-    questionH4Elem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show");
+    questionH4Elem = document.createElement("h4");
+    questionH4Elem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2");
     questionH4Elem.setAttribute("id", "questiontitle");
     questionH4Elem.style.display = "block";
     get("quizcontainer").appendChild(questionH4Elem);
     
-    var choiceListElem = document.createElement("button");
-    choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
-    choiceListElem.setAttribute("id", "choicelist1");
+    var currentChoiceListEl = listOfQuizQuestions[0].choices;
+    for (var i = 0; i < currentChoiceListEl.length; i++){
+
+    choiceListElem = document.createElement("button");
+    choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 choiceButtons");
+    choiceListElem.setAttribute("id", [i+1]+"choicelist");
+    choiceListElem.setAttribute("value", [i+1]);
     choiceListElem.setAttribute("type", "submit");
     choiceListElem.style.display = "block";
     get("quizcontainer").appendChild(choiceListElem);
 
-    var choiceListElem = document.createElement("button");
-    choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
-    choiceListElem.setAttribute("id", "choicelist2");
-    choiceListElem.setAttribute("type", "submit");
-    choiceListElem.style.display = "block";
-    get("quizcontainer").appendChild(choiceListElem);
-
-    var choiceListElem = document.createElement("button");
-    choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
-    choiceListElem.setAttribute("id", "choicelist3");
-    choiceListElem.setAttribute("type", "submit");
-    choiceListElem.style.display = "block";
-    get("quizcontainer").appendChild(choiceListElem);
-
-    var choiceListElem = document.createElement("button");
-    choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
-    choiceListElem.setAttribute("id", "choicelist4");
-    choiceListElem.setAttribute("type", "submit");
-    choiceListElem.style.display = "block";
-    get("quizcontainer").appendChild(choiceListElem);
     };
-
+  };
     
 
   // parse question and choices to html tags
@@ -148,44 +138,32 @@ get("startbutton").addEventListener("click", function () {
     console.log(answerValue);
   
     get("questiontitle").textContent = titleValue;
-    get("choicelist1").textContent = choicesValue[0];
-    get("choicelist2").textContent = choicesValue[1];
-    get("choicelist3").textContent = choicesValue[2];
-    get("choicelist4").textContent = choicesValue[3];
+    get("1choicelist").textContent = choicesValue[0];
+    get("2choicelist").textContent = choicesValue[1];
+    get("3choicelist").textContent = choicesValue[2];
+    get("4choicelist").textContent = choicesValue[3];
 
-    
   };
-
-
-
-  
 
   
 
 //3. When choice of answer is clicked..
+
     // addEventListener for choice button to return value
 
+  var choiceButtonSelector = document.getElementsByClassName("choiceButtons");
+  console.log(choiceButtonSelector);
 
+  // choiceButtonSelector.addEventListener("click", function(){
+  
+  //   console.log("choiceButtons is working");
 
-    // function returnChoiceValue(event){
-    //   var returnChoice = event.target;
-    //   //currentQuestion = listOfQuizQuestions[currentQuestionIndex];
+  // });
 
-
+    // function returnChoiceValue(){
     // }
 
-    choiceListElem.addEventListener("click", function () {
-      
-      // function returnUserChoiceValue(event){
-      //   //var returnChoice = event.target;
-      //   var returnChoiceIDValue = returnChoice.getAttribute("id");
-      //   console.log(returnChoiceIDValue);
-      //   console.log("user chose: " + returnChoice.getAttribute("id"));
-      // };
 
-      console.log("choiceButtons is working");
-
-    });
 
   //determine if answer matches correct answer
     // if answer is correct, show text to indicate "correct"
