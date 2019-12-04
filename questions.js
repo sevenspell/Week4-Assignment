@@ -1,6 +1,4 @@
 //Pseudocoding
-
-
 // create array of objects for code quiz questions
 var listOfQuizQuestions = [
   {
@@ -28,11 +26,6 @@ var listOfQuizQuestions = [
     choices: ["Math.floor(x)", "Math.round(x)", "Math.ceil(x)", "Math.random()"],
     answer: "4"
   }
-  // {
-  //   title: "show final result page",
-  //   choices: ["Result1", "Result2", "Result3", "Result4"],
-  //   answer: "7"
-  // }
 ];
 
 // create global variables
@@ -40,11 +33,10 @@ var quizContainerElem = get("quizcontainer");
 var questionH4Elem = "";
 var choiceListElem = "";
 var lineBreak = "";
+var allChoiceButtonsElem = "";
 
 var currentQuestionIndex = 0;
 var currentQuestion = listOfQuizQuestions[currentQuestionIndex];
-var nextQuestionIndex = currentQuestion + 1;
-var nextQuestion = listOfQuizQuestions[nextQuestionIndex];
 var latest = currentQuestionIndex++;
 
 var titleValue = listOfQuizQuestions[latest].title;
@@ -52,10 +44,26 @@ var choicesValue = listOfQuizQuestions[latest].choices;
 var answerValue = listOfQuizQuestions[latest].answer;
 
 var hiScore = 0;
-var totalSeconds = (listOfQuizQuestions.length * 15) + 15;
+var totalSeconds = listOfQuizQuestions.length * 15;
 
+//create functions
+function get(x) {
+  return document.getElementById(x);
+};
 
+function getClass(x) {
+  return document.getElementsByClassName(x);
+};
 
+function addToHiScore() {
+  hiScore += 15;
+  highScoreElem.textContent = "HighScore: " + hiScore;
+};
+
+function minusFromTimer() {
+  totalSeconds -= 15;
+  timerRemainingElem.textContent = "Time Left: " + totalSeconds;
+};
 
 //1. instructions and start button for user to press start
   //hi-score on the top left shows original score = 0
@@ -65,10 +73,11 @@ var totalSeconds = (listOfQuizQuestions.length * 15) + 15;
   var timerRemainingElem = get("timerCountdownSection");
   timerRemainingElem.textContent = "Time Left: " + totalSeconds;
 
-
 //2. Once start button is clicked..
   //addEventListener on button
-get("startbutton").addEventListener("click", function () {
+get("startbutton").addEventListener("click", function (event) {
+  event.preventDefault();
+
   //hide start button
   hideStart();
   //display question and 4 choices of answers
@@ -77,8 +86,8 @@ get("startbutton").addEventListener("click", function () {
     //post questions
   renderQuestions();
   //timer starts countdown
-  var timer;
-  timer = setInterval(updateTimer, 1000);
+  var timer = setInterval(updateTimer, 800);
+
   function updateTimer(){
     totalSeconds--;
     timerRemainingElem.textContent = "Time Left: " + totalSeconds;
@@ -86,11 +95,11 @@ get("startbutton").addEventListener("click", function () {
   // stop timer at zero
     if (totalSeconds <= 0) {
       clearInterval(timer);
-    };
+    } else if (latest ===  parseInt(listOfQuizQuestions.length)){
+      clearInterval(timer);
+    }
   };
-
 });
-
 
   //instructions and start button is hidden
   function hideStart() {  
@@ -103,33 +112,24 @@ get("startbutton").addEventListener("click", function () {
   };
 
 //display question and 4 choices of answers
-
   //create function for creating html tags for questions
   function createHTML(){
-
     questionH4Elem = get("questiontitle");
     questionH4Elem.setAttribute("class", "show");
-    
     var currentChoiceListEl = listOfQuizQuestions[0].choices;
     for (var i = 0; i < currentChoiceListEl.length; i++){
-
       choiceListElem = document.createElement("button");
       choiceListElem.setAttribute("class", "col-sm-8 offset-sm-2 col-md-8 offset-md-2 show choiceButtons");
       choiceListElem.setAttribute("id", [i+1]+"choicelist");
       choiceListElem.setAttribute("value", [i+1]);
       choiceListElem.setAttribute("type", "submit");
       choiceListElem.onclick = answerVerification;
-
       var choiceButtonInsert = get("choicelist").appendChild(choiceListElem);
-
       lineBreak = document.createElement("br");
-
       var lineBreakInsert = get("choicelist").appendChild(lineBreak);
-
     };
   };
     
-
   // parse question and choices to html tags
   function renderQuestions() {
     currentQuestionIndex = 0
@@ -153,16 +153,10 @@ get("startbutton").addEventListener("click", function () {
     return latest;
   };
 
- 
-
-
-
-
 //3. When choice of answer is clicked..
   // add onclick event function for choice button to return value
   function answerVerification(){
     var answerValue = listOfQuizQuestions[latest-1].answer;
-
     console.log(this.value);
 
     //determine if answer matches correct answer
@@ -173,7 +167,7 @@ get("startbutton").addEventListener("click", function () {
       function delayedAnswerStatus(){
         setTimeout(function () {
           get("answerstatus").style.display='none';
-        }, 1500);
+        }, 800);
         return;
       };
       delayedAnswerStatus();
@@ -188,7 +182,7 @@ get("startbutton").addEventListener("click", function () {
       function delayedAnswerStatus(){
         setTimeout(function () {
           get("answerstatus").style.display='none';
-        }, 1500);
+        }, 800);
       };
       delayedAnswerStatus();
       //deduct 15 seconds from timer
@@ -198,14 +192,12 @@ get("startbutton").addEventListener("click", function () {
       console.log("this is latest index " + latest);
       if (latest === parseInt(listOfQuizQuestions.length)){
         setTimeout(function quizEnds() {
-            
-        }, 1500);
+        }, 800);
       } else {
         renderNextQuestion();
       }
   };
 };
-
 
   function renderNextQuestion() {
     //delay display of next question to clear answerstatus first
@@ -214,7 +206,6 @@ get("startbutton").addEventListener("click", function () {
 
     if (currentQuestionIndex < parseInt(listOfQuizQuestions.length)){
       setTimeout(function executeNextQuestion() {
-            
         var currentQuestion = listOfQuizQuestions[latest];
         var nextTitleValue = currentQuestion.title;
         var nextChoicesValue = currentQuestion.choices;
@@ -234,59 +225,89 @@ get("startbutton").addEventListener("click", function () {
         latest = currentQuestionIndex++;
         console.log("Next index coming up later: " + latest);
         return latest;
-  
-      }, 1500);
+      }, 800);
 
-    } else if (latest ===  parseInt(listOfQuizQuestions.length)){
+  //4. When it comes to end of quiz ie. last question on list
+     
+  } else if (latest ===  parseInt(listOfQuizQuestions.length)){
       setTimeout(function quizEnds() {
-            
         console.log("quiz ends no more next questions!");
-        window.location.replace(href="./resultspage.html");
-  
-      }, 1500);
-    };
+        
+        console.log(hiScore);
+        console.log(totalSeconds);
+
+        scoreNumber = parseInt(hiScore);
+        finalTime = parseInt(totalSeconds);
+
+        console.log(scoreNumber);
+        console.log(finalTime);
+
+        var total = scoreNumber+finalTime;
+        console.log(total);
+
+        function showFinalScore(){
+          questionH4Elem.setAttribute("class", "hide");
+          allChoiceButtonsElem1 = get("1choicelist");
+          allChoiceButtonsElem2 = get("2choicelist");
+          allChoiceButtonsElem3 = get("3choicelist");
+          allChoiceButtonsElem4 = get("4choicelist");
+          allChoiceButtonsElem1.setAttribute("class", "hide");
+          allChoiceButtonsElem2.setAttribute("class", "hide");
+          allChoiceButtonsElem3.setAttribute("class", "hide");
+          allChoiceButtonsElem4.setAttribute("class", "hide");
+
+
+          finalScoreElem = document.createElement("h4");
+          finalScoreElem.setAttribute("class", "show");
+          finalScoreElem.setAttribute("id", "score");
+          finalScoreElem.textContent = ("Your final score is " + total + ".");//show remaining seconds on timer + high score as final 
+          var appendFinalScore = get("finalscore").appendChild(finalScoreElem);
+          console.log(appendFinalScore);
+
+          initialsInput = document.createElement("label");
+          initialsInput.setAttribute("class", "show formtext");
+          initialsInput.setAttribute("id", "initialInput");
+          initialsInput.setAttribute("for", "formGroup");
+          initialsInput.textContent = ("Enter your initials:");
+          var appendInitialsInput = get("initialsheader").appendChild(initialsInput);
+
+          initialsInputBox = document.createElement("input"); // allow text input of initials and submit
+          initialsInputBox.setAttribute("class", "show form-control");
+          initialsInputBox.setAttribute("id", "initialInputBox");
+          initialsInputBox.setAttribute("type", "text");
+          initialsInputBox.setAttribute("placeholder", "VIC");
+          var appendInitialsInputBox = get("initialsinput").appendChild(initialsInputBox);
+
+          initialsButton = document.createElement("button");
+          initialsButton.setAttribute("class", "btn btn-rita");
+          initialsButton.setAttribute("id", "initialsbutton");
+          initialsButton.setAttribute("type", "submit");
+          initialsButton.textContent = ("Submit");
+          initialsButton.onclick = goToFinalPage;
+          var appendInitialsInputBox = get("initialsubmitbutton").appendChild(initialsButton);
+        };
+        showFinalScore();
+
+        function goToFinalPage(){
+
+          //store initials and high score in local storage
+          var storeInitialsHiScore = localStorage.setItem(initialsInputBox.value, total);
+          //go to results page 
+          // get("form_id").submit();
+          // window.location.replace(href="./resultspage.html");
+        };
+      }, 800);
   };
-
-
-
-
-
-
-
-//4. When it comes to end of quiz ie. last question on list
-  //go to results page 
-    //show remaining seconds on timer as final score
-    // allow text input of initials and submit
-//5. Go to hi-score page with initials
-  //show latest hi-score ranking (sorted by highest scores)
-  //show Clear button to clear localStorage
-  //show Go Back to Start button to go back to initial page
-
-
-
-//create functions
-
-function get(x) {
-  return document.getElementById(x);
 };
 
-function getClass(x) {
-  return document.getElementsByClassName(x);
-};
 
-function addToHiScore() {
-  hiScore += 15;
-  highScoreElem.textContent = "HighScore: " + hiScore;
-};
 
-function minusFromTimer() {
-  totalSeconds -= 15;
-  timerRemainingElem.textContent = "Time Left: " + totalSeconds;
-};
 
-function finalScoreCalc() {
-  hiScore + totalSeconds;
-};
+
+
+
+
+
 
 
 

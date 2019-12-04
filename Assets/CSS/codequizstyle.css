@@ -1,7 +1,11 @@
+
 .btn-rita {
     background-color: rgba(0, 60, 128, 0.842);
     color: hsla(86, 96%, 81%, 0.973);
     font-weight: bold;
+    padding: 10px;
+    margin: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 };
 
 #quizcontent {
@@ -10,17 +14,20 @@
     padding:10px 40px 40px 40px; 
     background-color: rgba(0, 128, 128, 0.041); 
     width:50%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 };
 
 #timerCountdownSection{
     position: relative;
     margin: 10px 10px 10px 500px;
-}
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+};
 
 #hiScoreSection{
     position: relative;
     margin: 10px 1150px 10px 10px;
-}
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+};
 
 .choiceButtons{
     background-color: rgba(0, 60, 128, 0.842);
@@ -33,13 +40,27 @@
     width: 200px;
     position: relative;
     left: -250px;
-
-
-}
+};
 
 .hide {
     display: none;
   }
+
+.initialstable{
+color: red;
+margin: 20px;
+padding: 10px;
+font-size: 28px;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+};
+
+.highscoretable{
+color: rgba(0, 60, 128, 0.842);
+margin: 20px;
+padding: 10px;
+font-size: 28px;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+};
 
 .footer {
     position: fixed;
@@ -54,4 +75,5 @@
     margin-bottom: 0;
     border-top: 5px solid;
     border-top-color: hsla(86, 96%, 81%, 0.973);
-}
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+};
