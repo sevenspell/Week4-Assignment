@@ -6,28 +6,33 @@ var listOfQuizQuestions = [
   {
     title: "Commonly used data types DO NOT include:",
     choices: ["strings", "booleans", "alerts", "numbers"],
-    answer: "3choicelist"
+    answer: "3"
   },
   {
     title: "The condition in an if / else statement is enclosed within ____.",
     choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
-    answer: "3choicelist"
+    answer: "3"
   },
   {
     title: "What is the correct code for 'A does not equal to B'?",
-    choices: ["A =/= B", "A !== B", "A === B", "A += B"],
-    answer: "2choicelist"
+    choices: ["A =/= B", "A != B", "A === B", "A += B"],
+    answer: "2"
   },
   {
     title: "The purpose of functions is to:",
     choices: ["perform actions in the content", "style the content", "create content", "log results"],
-    answer: "1choicelist"
+    answer: "1"
   },
   {
     title: "What function do you use to create random results?",
     choices: ["Math.floor(x)", "Math.round(x)", "Math.ceil(x)", "Math.random()"],
-    answer: "4choicelist"
+    answer: "4"
   }
+  // {
+  //   title: "show final result page",
+  //   choices: ["Result1", "Result2", "Result3", "Result4"],
+  //   answer: "7"
+  // }
 ];
 
 // create global variables
@@ -35,19 +40,17 @@ var quizContainerElem = get("quizcontainer");
 var questionH4Elem = "";
 var choiceListElem = "";
 var lineBreak = "";
-var returnChoiceListElemValue = "";
-var returnChoiceListElemValue1 = "";
-var returnChoiceListElemValue2 = "";
-var returnChoiceListElemValue3 = "";
-var returnChoiceListElemValue4 = "";
 
-var titleValue = listOfQuizQuestions[0].title;
-var choicesValue = listOfQuizQuestions[0].choices;
-var answerValue = listOfQuizQuestions[0].answer;  
 var currentQuestionIndex = 0;
 var currentQuestion = listOfQuizQuestions[currentQuestionIndex];
-var nextQuestionIndex = currentQuestionIndex + 1;
+var nextQuestionIndex = currentQuestion + 1;
 var nextQuestion = listOfQuizQuestions[nextQuestionIndex];
+var latest = currentQuestionIndex++;
+
+var titleValue = listOfQuizQuestions[latest].title;
+var choicesValue = listOfQuizQuestions[latest].choices;
+var answerValue = listOfQuizQuestions[latest].answer;
+
 var hiScore = 0;
 var totalSeconds = (listOfQuizQuestions.length * 15) + 15;
 
@@ -89,7 +92,6 @@ get("startbutton").addEventListener("click", function () {
 });
 
 
-
   //instructions and start button is hidden
   function hideStart() {  
     var startHeaderHide = get("startheader");
@@ -116,7 +118,7 @@ get("startbutton").addEventListener("click", function () {
       choiceListElem.setAttribute("id", [i+1]+"choicelist");
       choiceListElem.setAttribute("value", [i+1]);
       choiceListElem.setAttribute("type", "submit");
-      choiceListElem.onclick = returnChoiceValue;
+      choiceListElem.onclick = answerVerification;
 
       var choiceButtonInsert = get("choicelist").appendChild(choiceListElem);
 
@@ -130,10 +132,11 @@ get("startbutton").addEventListener("click", function () {
 
   // parse question and choices to html tags
   function renderQuestions() {
-
-    var titleValue = listOfQuizQuestions[0].title;
-    var choicesValue = listOfQuizQuestions[0].choices;
-    var answerValue = listOfQuizQuestions[0].answer;  
+    currentQuestionIndex = 0
+    console.log("original question index =" + currentQuestionIndex);
+    var titleValue = currentQuestion.title;
+    var choicesValue = currentQuestion.choices;
+    var answerValue = currentQuestion.answer;  
   
     console.log(titleValue);
     console.log(choicesValue);
@@ -145,26 +148,110 @@ get("startbutton").addEventListener("click", function () {
     get("3choicelist").textContent = choicesValue[2];
     get("4choicelist").textContent = choicesValue[3];
 
+    currentQuestionIndex++;
+    latest = currentQuestionIndex++;
+    return latest;
   };
+
+ 
+
+
 
 
 //3. When choice of answer is clicked..
-    // add onclick event function for choice button to return value
-    function returnChoiceValue(){
-      console.log(this.value);
-      return this.value;
-    };
+  // add onclick event function for choice button to return value
+  function answerVerification(){
+    var answerValue = listOfQuizQuestions[latest-1].answer;
 
+    console.log(this.value);
 
-
-  //determine if answer matches correct answer
-    // if answer is correct, show text to indicate "correct"
-      //hide current question/choices
+    //determine if answer matches correct answer
+    if (this.value === answerValue){
+      // if answer is correct, show text to indicate "correct"
+      get("answerstatus").textContent = "You got it correct!";
+      // clear answerstatus after 1.5secs
+      function delayedAnswerStatus(){
+        setTimeout(function () {
+          get("answerstatus").style.display='none';
+        }, 1500);
+        return;
+      };
+      delayedAnswerStatus();
+      // add 15 points to High Score
+      addToHiScore();
       //show next question/choices
-    // if answer is wrong, show text to indicate "wrong" 
+      renderNextQuestion();
+    } else if (this.value != answerValue){
+      // if answer is wrong, show text to indicate "wrong" 
+      get("answerstatus").textContent = "You got it wrong! 15 seconds deducted.";
+      // clear answerstatus after 1.5secs
+      function delayedAnswerStatus(){
+        setTimeout(function () {
+          get("answerstatus").style.display='none';
+        }, 1500);
+      };
+      delayedAnswerStatus();
       //deduct 15 seconds from timer
-      //hide current question/choices
+      minusFromTimer();
       //show next question/choices
+      console.log("this is length of qz qns: " + listOfQuizQuestions.length);
+      console.log("this is latest index " + latest);
+      if (latest === parseInt(listOfQuizQuestions.length)){
+        setTimeout(function quizEnds() {
+            
+        }, 1500);
+      } else {
+        renderNextQuestion();
+      }
+  };
+};
+
+
+  function renderNextQuestion() {
+    //delay display of next question to clear answerstatus first
+    currentQuestionIndex = latest;
+    console.log("currentQuestionIndex " + currentQuestionIndex);
+
+    if (currentQuestionIndex < parseInt(listOfQuizQuestions.length)){
+      setTimeout(function executeNextQuestion() {
+            
+        var currentQuestion = listOfQuizQuestions[latest];
+        var nextTitleValue = currentQuestion.title;
+        var nextChoicesValue = currentQuestion.choices;
+        var AnswerValue = currentQuestion.answer;
+  
+        console.log(nextTitleValue);
+        console.log(nextChoicesValue);
+        console.log(AnswerValue);
+  
+        get("questiontitle").textContent = nextTitleValue;
+        get("1choicelist").textContent = nextChoicesValue[0];
+        get("2choicelist").textContent = nextChoicesValue[1];
+        get("3choicelist").textContent = nextChoicesValue[2];
+        get("4choicelist").textContent = nextChoicesValue[3];
+  
+        currentQuestionIndex++;
+        latest = currentQuestionIndex++;
+        console.log("Next index coming up later: " + latest);
+        return latest;
+  
+      }, 1500);
+
+    } else if (latest ===  parseInt(listOfQuizQuestions.length)){
+      setTimeout(function quizEnds() {
+            
+        console.log("quiz ends no more next questions!");
+        window.location.replace(href="./resultspage.html");
+  
+      }, 1500);
+    };
+  };
+
+
+
+
+
+
 
 //4. When it comes to end of quiz ie. last question on list
   //go to results page 
@@ -189,10 +276,12 @@ function getClass(x) {
 
 function addToHiScore() {
   hiScore += 15;
+  highScoreElem.textContent = "HighScore: " + hiScore;
 };
 
 function minusFromTimer() {
   totalSeconds -= 15;
+  timerRemainingElem.textContent = "Time Left: " + totalSeconds;
 };
 
 function finalScoreCalc() {
